@@ -1,8 +1,9 @@
 import torch
 import torch.nn as nn
+from data import load_data
 
-input_dim = 28*28
-output_dim = 10
+input_dim = 13
+output_dim = 3
 hidden_dim = 20
 
 class ClimateControlModel(nn.Module):
@@ -10,42 +11,45 @@ class ClimateControlModel(nn.Module):
         super(ClimateControlModel, self).__init__()
         # Linear function
         self.fc1 = nn.Linear(input_dim, hidden_dim) 
+        fchalf_dim = 30
+        self.fc1half = nn.Linear(hidden_dim, fchalf_dim) 
 
         # Non-linearity
         self.sigmoid = nn.Sigmoid()
+        self.relu = nn.ReLU()
 
         # Linear function (readout)
-        self.fc2 = nn.Linear(hidden_dim, output_dim)  
-        criterion = nn.CrossEntropyLoss()
+        self.fc2 = nn.Linear(fchalf_dim, output_dim)  
 
     def forward(self, x):
         # Linear function  # LINEAR
-        out = self.fc1(x)
+        x = self.relu(self.fc1(x))
+        x = self.fc1half(x)
 
         # Non-linearity  # NON-LINEAR
-        out = self.sigmoid(out)
+        x = self.relu(x)
 
         # Linear function (readout)  # LINEAR
-        out = self.fc2(out)
+        out = self.fc2(x)
+        out = self.sigmoid(out)
         return out
     
 
-def train():
-    model = ClimateControlModel(input_dim, output_dim)
-    iter = 0
 
-    num_epochs = 20
+def train(model):
+    iter = 0
 
     learning_rate = 0.1
 
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
-    batch_size = 100
     n_iters = 3000
 
-    train_dataset = []
-    batch_size = 1
-    test_dataset = []
+    criterion = nn.CrossEntropyLoss()
+
+    train_dataset = load_data()
+    batch_size = 5
+    test_dataset = train_dataset
     num_epochs = n_iters / (len(train_dataset) / batch_size)
     num_epochs = int(num_epochs)
 
@@ -53,20 +57,21 @@ def train():
                                             batch_size=batch_size, 
                                             shuffle=True)
 
-    test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
-                                            batch_size=batch_size, 
-                                            shuffle=False)
+    # test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
+    #                                         batch_size=batch_size, 
+    #                                         shuffle=False)
 
     for epoch in range(num_epochs):
-        for i, (images, labels) in enumerate(train_loader):
-            # Load images with gradient accumulation capabilities
-            images = images.view(-1, 28*28).requires_grad_()
+        for i, (vec, labels) in enumerate(train_dataset):
+            # vec, labels = data
+            vec = torch.as_tensor(vec)
+            labels = torch.as_tensor(labels)
 
             # Clear gradients w.r.t. parameters
             optimizer.zero_grad()
 
             # Forward pass to get output/logits
-            outputs = model(images)
+            outputs = model(vec)
 
             # Calculate Loss: softmax --> cross entropy loss
             loss = criterion(outputs, labels)
@@ -84,30 +89,63 @@ def train():
                 correct = 0
                 total = 0
                 # Iterate through test dataset
-                for images, labels in test_loader:
-                    # Load images with gradient accumulation capabilities
-                    images = images.view(-1, 28*28).requires_grad_()
+                for vec2, labels2 in train_dataset:
+                    vec2 = torch.as_tensor(vec2)
 
                     # Forward pass only to get logits/output
-                    outputs = model(images)
+                    outputs = model(vec2)
 
                     # Get predictions from the maximum value
-                    _, predicted = torch.max(outputs.data, 1)
+                    total += 1
+                    ac_on = 0
+                    heat_on = 0
+                    if outputs[1] > 0.5:
+                        ac_on = 1
+                    if outputs[2] > 0.5:
+                        heat_on = 1
 
-                    # Total number of labels
-                    total += labels.size(0)
-
-                    # Total correct predictions
-                    correct += (predicted == labels).sum()
+                    if labels2[1] == ac_on and labels2[2] == heat_on:
+                        correct += 1
 
                 accuracy = 100 * correct / total
 
                 # Print Loss
-                print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.item(), accuracy))
+                # print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.item(), accuracy))
+
+    # Final test
+    correct = 0
+    total = 0
+    for vec2, labels2 in train_dataset:
+        vec2 = torch.as_tensor(vec2)
+
+        # Forward pass only to get logits/output
+        outputs = model(vec2)
+
+        # Get predictions from the maximum value
+        total += 1
+        ac_on = 0
+        heat_on = 0
+        if outputs[1] > 0.5:
+            ac_on = 1
+        if outputs[2] > 0.5:
+            heat_on = 1
+
+        if labels2[1] == ac_on and labels2[2] == heat_on:
+            print(labels2, ac_on, heat_on, outputs)
+            correct += 1
+
+    accuracy = 100 * correct / total
+
+    # Print Loss
+    # print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.item(), accuracy))s
 
 def finished_model():
     model = ClimateControlModel(input_dim, output_dim)
+    train(model)
     return model
 
 def inputs_to_vector(inputs):
     return torch.tensor(inputs)
+
+if __name__ == "__main__":
+    finished_model()
