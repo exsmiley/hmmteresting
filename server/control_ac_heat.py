@@ -15,7 +15,7 @@ def control_ac_heat(people_30_ago, people_15_ago, people_now, people_next_30, pe
         room_factor = 1.2  # 큰 방은 온도 변화가 느리므로 더 강한 조정이 필요함
     elif room_size == "medium":
         room_factor = 1.0  # 중간 크기는 기본값
-    else:
+    else:  # small
         room_factor = 0.8  # 작은 방은 온도 변화가 빠르므로 약한 조정이 필요함
     
     # 인원 수와 외부 기온, 방 크기를 기반으로 목표 온도 계산
@@ -38,7 +38,7 @@ def control_ac_heat(people_30_ago, people_15_ago, people_now, people_next_30, pe
     # 에어컨과 히터의 작동 여부 결정
     if target_temperature > room_temp_now:
         ac_on = "no"  # 실내 온도가 낮으므로 히터를 켜야 함
-        heat_on = "yes"
+        heat_on = "yes" if avg_weather < 30 else "no"  # 외부 기온이 30도 이하일 경우에만 히터를 켜기
     elif target_temperature < room_temp_now:
         ac_on = "yes"  # 실내 온도가 높으므로 에어컨을 켜야 함
         heat_on = "no"
