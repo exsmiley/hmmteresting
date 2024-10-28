@@ -5,6 +5,10 @@ app = Flask(__name__)
 
 model = finished_model()
 
+@app.route("/", methods=['GET'])
+def ping():
+    return 200
+
 @app.route("/climate", methods=['POST'])
 def climate_api():
     # TODO get form data from request
@@ -18,4 +22,4 @@ def climate_api():
     }
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)

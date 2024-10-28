@@ -1,5 +1,5 @@
 runtime: python39  # Python 런타임 환경 지정
-entrypoint: gunicorn -b :$PORT main:app  # 앱 실행 방법 지정
+entrypoint: gunicorn -b :$PORT main:server  # 앱 실행 방법 지정
 resources:
   cpu: 1
   memory_gb: 1
