@@ -1,9 +1,11 @@
 from flask import Flask, request
+from flask_cors import CORS
 import torch
 from control_model import finished_model
 from data import datadict_to_vectors
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 model = finished_model()
 
