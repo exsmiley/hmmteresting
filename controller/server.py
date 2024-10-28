@@ -34,13 +34,15 @@ def vec_output_to_output(outputs):
         ac_on = 1
     if outputs[2] > 0.5:
         heat_on = 1
+    
+    temp = outputs[0] * 40 - 5
 
     return {
         "ac": ac_on,
         "ac_conf": outputs[1].tolist(),
         "heat": heat_on,
         "heat_conf": outputs[2].tolist(),
-        "temperature": 23,
+        "temperature": temp.tolist(),
         "temperature_val": outputs[0].tolist(),
     }
 

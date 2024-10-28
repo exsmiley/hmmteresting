@@ -15,7 +15,7 @@ gym,2,3,4,3,1,26,28,29,23,25,small,25,yes,no
 gym,3,4,2,1,0,28,29,30,24,26,small,26,yes,no
 gym,4,2,1,0,0,30,31,31,26,27,small,27,yes,no
 gym,2,3,4,4,2,23,25,26,22,24,small,24,yes,no
-gym,1,2,3,2,1,20,19,18,21,20,small,21,no,yes
+gym,1,2,3,2,1,20,19,18,21,20,small,21,no,no
 gym,0,1,2,2,1,18,17,16,20,19,small,20,no,yes
 gym,1,2,4,3,1,17,15,14,19,18,small,19,no,yes
 gym,0,1,2,1,0,16,15,14,18,17,small,18,no,yes
@@ -40,3 +40,9 @@ launderette,2,3,4,5,3,30,31,32,27,29,small,27,yes,no
 launderette,3,4,5,6,4,29,30,31,28,30,small,28,yes,no
 launderette,2,3,3,4,2,28,29,30,26,27,small,26,yes,no
 launderette,1,2,3,3,1,27,28,29,25,26,small,25,yes,no
+lobby,2,3,0,0,0,26,25,24,22,22,large,22,no,no
+gym,0,0,0,0,0,29,30,30,23,24,small,23,no,no
+kitchen,20,15,5,0,3,29,29,30,24,21,medium,23,no,no
+launderette,4,3,1,0,0,-3,-2,-3,23,21,small,20,no,no
+lobby,1,2,0,0,1,5,6,8,20,19,large,18,no,no
+lobby,0,0,5,10,10,31,30,30,23,26,large,22,yes,no

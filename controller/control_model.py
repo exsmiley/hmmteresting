@@ -43,12 +43,12 @@ def train(model):
 
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
-    n_iters = 3000
+    n_iters = 10000
 
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.BCELoss()
 
     train_dataset = load_data()
-    batch_size = 5
+    batch_size = 20
     test_dataset = train_dataset
     num_epochs = n_iters / (len(train_dataset) / batch_size)
     num_epochs = int(num_epochs)
@@ -131,13 +131,13 @@ def train(model):
             heat_on = 1
 
         if labels2[1] == ac_on and labels2[2] == heat_on:
-            print(labels2, ac_on, heat_on, outputs)
+            # print(labels2, ac_on, heat_on, outputs)
             correct += 1
 
     accuracy = 100 * correct / total
 
     # Print Loss
-    # print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.item(), accuracy))s
+    print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.item(), accuracy))
 
 def finished_model():
     model = ClimateControlModel(input_dim, output_dim)
