@@ -1,0 +1,177 @@
+.box {
+  margin-bottom: 20px;
+}
+
+.summary-box{
+  .nav-pills .nav-link {
+    color: #7e8299;
+  }
+  .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #ec4887;
+    background-color: transparent;
+    border-bottom: 2px solid #ec4887;
+  } 
+}
+
+.revinue-status{
+  background-image: linear-gradient(to right bottom, #eb4885, #e04a8f, #d44d97, #c7509e, #b954a4);
+  color: #ffffff;
+}
+
+.earning-status{
+  background-image: linear-gradient(to right bottom, #ffb72c, #ffa738, #ff9944, #fc8b4f, #f57f59);
+  color: #ffffff;
+}
+
+.page-status{
+  background-image: linear-gradient(to right bottom, #875fc0, #7c58be, #6f52bd, #624cbb, #5246ba);
+  color: #ffffff;
+}
+.bounce-status{
+  background-image: linear-gradient(to right bottom, #46c5f2, #40b3e8, #40a1dd, #458ed0, #4c7cc1);
+  color: #ffffff;
+}
+
+.timeline-label .timeline-badge{
+  margin-top: 3px;
+}
+.timeline-label .timeline-label {
+  width: 96px;
+}
+.timeline-label::before {
+  left: 95px;
+  background-color: #f7f7f7;
+}
+
+#basic-doughnut{
+  height:314px;
+}
+
+.rtl .timeline-label::before {
+  right: 94px;
+  left: auto;
+}
+
+
+#chart-container {
+ 
+   height: 120px;
+}
+
+
+#chart-conta {
+ 
+   height: 120px;
+}
+
+
+#chart-contain {
+ 
+   height: 120px;
+}
+
+
+hr
+{
+    color:#D3D3D3;
+}
+
+.currentstate
+{
+  height:162px;
+}
+
+
+.information
+{
+  height:510px;
+}
+.yielddaily
+{
+  height:539px;
+}
+
+
+/*<Dashboard 1 Start>*/
+
+@media only screen and (max-width: 1600px) {
+  .performance {
+    height:387px;
+  }
+
+  
+  .nyusa {
+    height:332px;
+  }
+  .yielddaily {
+    height:495px;
+    overflow: scroll;
+  }
+
+}
+
+@media only screen and (max-width: 1440px) {
+  .yielddaily {
+    height:487px;
+  }
+}
+
+@media only screen and (max-width: 1399px) {
+  
+  .information {
+    height:auto;
+  }
+  .nyusa
+  {
+     height:auto;
+  }
+  .yielddaily {
+    height:auto;
+  }
+}
+
+@media only screen and (max-width: 834px) {
+  .performance {
+    height:auto;
+  }
+}
+
+@media only screen and (max-width: 834px) {
+  .yield {
+    height:auto;
+  }
+}
+
+/*<Dashboard 1 End>*/
+
+
+/*<Dashboard Page Performance Start>*/
+
+@media only screen and (max-width: 1600px) {
+  .battery {
+    height:202px;
+  }
+  
+}
+
+
+@media only screen and (max-width: 1194px) {
+  .solarproduction {
+    height:203px;
+  }
+  .battery {
+    height:203px;
+  }
+  
+}
+
+@media only screen and (max-width: 834px) {
+  .solarproduction {
+    height:199px;
+  }
+  .battery {
+    height:198px;
+  }
+}
+
+/*<Dashboard Page Performance End>*/
