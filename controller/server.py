@@ -17,3 +17,5 @@ def climate_api():
         "temperature_val": 0.8,
     }
 
+if __name__ == '__main__':
+    app.run(debug=True)
