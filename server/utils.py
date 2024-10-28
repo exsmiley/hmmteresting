@@ -9,7 +9,7 @@ previous_people_count = {
     'meeting_room' : 0,
     'gym': 0,
     'multi-function_room' : 0,
-    'lounge': 0
+    'lobby': 0
 }
 
 # 각 방의 최근 2시간 동안의 가상 이용률 데이터를 시간 단위로 저장
