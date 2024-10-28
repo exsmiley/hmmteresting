@@ -34,6 +34,14 @@ class ClimateControlModel(nn.Module):
         out = self.sigmoid(out)
         return out
     
+    def load(self, name='models/brain'):
+        self.load_state_dict(torch.load(name))
+        print('Loaded model from {}!'.format(name))
+
+    def save(self, name='models/brain'):
+        torch.save(self.state_dict(), name)
+        print('Saved model to {}!'.format(name))
+    
 
 
 def train(model):
@@ -43,7 +51,7 @@ def train(model):
 
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
-    n_iters = 10000
+    n_iters = 4500
 
     criterion = nn.BCELoss()
 
@@ -110,7 +118,7 @@ def train(model):
                 accuracy = 100 * correct / total
 
                 # Print Loss
-                # print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.item(), accuracy))
+                print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.item(), accuracy))
 
     # Final test
     correct = 0
@@ -138,14 +146,16 @@ def train(model):
 
     # Print Loss
     print('Iteration: {}. Loss: {}. Accuracy: {}'.format(iter, loss.item(), accuracy))
+    model.save()
 
 def finished_model():
     model = ClimateControlModel(input_dim, output_dim)
-    train(model)
+    model.load()
     return model
 
 def inputs_to_vector(inputs):
     return torch.tensor(inputs)
 
 if __name__ == "__main__":
-    finished_model()
+    model = ClimateControlModel(input_dim, output_dim)
+    train(model)

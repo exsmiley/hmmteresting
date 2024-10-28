@@ -15,19 +15,24 @@ def load_data():
 
 def datadict_to_vectors(row):
     vec = []
-
-    if row['room_size'] == "small":
-        vec.append(1)
-        vec.append(0)
-        vec.append(0)
-    elif row['room_size'] == 'medium':
-        vec.append(0)
-        vec.append(1)
-        vec.append(0)
+    
+    if 'room_size' in row:
+        if row['room_size'] == "small":
+            vec.append(1)
+            vec.append(0)
+            vec.append(0)
+        elif row['room_size'] == 'medium':
+            vec.append(0)
+            vec.append(1)
+            vec.append(0)
+        else:
+            vec.append(0)
+            vec.append(0)
+            vec.append(1)
     else:
         vec.append(0)
-        vec.append(0)
         vec.append(1)
+        vec.append(0)
 
     vec.append(normalize_people(row['people_30_ago']))
     vec.append(normalize_people(row['people_15_ago']))
