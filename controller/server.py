@@ -8,7 +8,7 @@ model = finished_model()
 
 @app.route("/", methods=['GET'])
 def ping():
-    return 200
+    return "OK"
 
 @app.route("/climate", methods=['POST'])
 def climate_api():
