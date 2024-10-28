@@ -7,6 +7,10 @@ app = Flask(__name__)
 
 model = finished_model()
 
+@app.route("/", methods=['GET'])
+def ping():
+    return "OK"
+
 @app.route("/climate", methods=['POST'])
 def climate_api():
     vec, _ = datadict_to_vectors(request.form)
@@ -39,3 +43,7 @@ def vec_output_to_output(outputs):
         "temperature": 23,
         "temperature_val": outputs[0].tolist(),
     }
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, debug=True)
